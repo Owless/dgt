@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DGT-studio - Премиальный тюнинг автомобилей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           HEADER STYLES
+        ============================================ */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px;
+            transition: height 0.4s ease;
+        }
+
+        header.scrolled .header-container {
+            height: 75px;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.9) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 900;
+            color: #000;
+            letter-spacing: -1px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .logo:hover .logo-icon {
+            background: linear-gradient(135deg, #f0f0f0 0%, rgba(255,255,255,0.95) 100%);
+            transform: rotate(-3deg) scale(1.05);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text .brand {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            line-height: 1;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .logo-text .brand .dgt {
+            font-weight: 900;
+        }
+
+        .logo-text .brand .studio {
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .logo-text .tagline {
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* Navigation */
+        .nav-main {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 45px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Contact Info */
+        .header-contact {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .header-phone {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .header-phone:hover {
+            color: #fff;
+        }
+
+        .phone-icon {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .contact-btn {
+            padding: 14px 32px;
+            background: #fff;
+            color: #000;
+            border: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .contact-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .mobile-toggle span {
+            width: 28px;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 90px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 40px 60px;
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: calc(100vh - 90px);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+        }
+
+        .mobile-nav li {
+            margin-bottom: 20px;
+        }
+
+        .mobile-nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .mobile-nav a:hover {
+            color: #fff;
+            padding-left: 20px;
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============================================
+           HERO SLIDER
+        ============================================ */
+
+        .hero-slider {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+            transition: transform 8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide.active .slide-bg {
+            transform: scale(1.1);
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .slide-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .slide-content h1 {
+            font-size: 80px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            line-height: 1.1;
+        }
+
+        .slide-content h1 strong {
+            font-weight: 700;
+        }
+
+        .slide-content p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 2px;
+            margin-bottom: 45px;
+            line-height: 1.8;
+        }
+
+        .slide-cta {
+            display: inline-flex;
+            gap: 20px;
+        }
+
+        .cta-btn {
+            padding: 18px 45px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #fff;
+        }
+
+        .cta-btn:hover {
+            background: transparent;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-btn.secondary:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        /* Slider Navigation */
+        .slider-nav {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 3;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+
+        .slider-dot.active {
+            background: #fff;
+            width: 40px;
+            border-radius: 6px;
+        }
+
+        .slider-dot:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Slider Arrows */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 3;
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        .slider-arrow:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .slider-arrow.prev {
+            left: 40px;
+        }
+
+        .slider-arrow.next {
+            right: 40px;
+        }
+
+        /* ============================================
+           SERVICES SECTION
+        ============================================ */
+
+        .services-section {
+            padding: 0;
+            background: #000;
+        }
+
+        .service-item {
+            position: relative;
+            height: 70vh;
+            min-height: 600px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .service-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0.6) grayscale(20%);
+        }
+
+        .service-item:hover .service-bg {
+            transform: scale(1.08);
+            filter: brightness(0.8) grayscale(0%);
+        }
+
+        .service-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+        }
+
+        .service-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 80px 60px;
+            z-index: 2;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .service-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .service-title {
+            font-size: 56px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .service-title strong {
+            font-weight: 700;
+        }
+
+        .service-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            max-width: 600px;
+            margin-bottom: 35px;
+        }
+
+        .service-brands {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .brand-badge {
+            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .service-item:hover .service-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-link:hover {
+            background: #f0f0f0;
+            gap: 18px;
+        }
+
+        .service-link::after {
+            content: '→';
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .service-link:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* ============================================
+           PROJECTS SECTION
+        ============================================ */
+
+        .projects-section {
+            padding: 120px 0;
+            background: #0a0a0a;
+            position: relative;
+        }
+
+        .projects-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: 64px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        .section-title strong {
+            font-weight: 700;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .project-card {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            background: #111;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0.7);
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.1);
+            filter: brightness(1);
+        }
+
+        .project-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px 35px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover .project-overlay {
+            transform: translateY(0);
+        }
+
+        .project-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #fff;
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .project-name {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .project-specs {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .project-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-action {
+            opacity: 1;
+        }
+
+        .project-action:hover {
+            gap: 15px;
+        }
+
+        .project-action::after {
+            content: '→';
+            font-size: 16px;
+        }
+
+        /* View All Button */
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 50px;
+            background: transparent;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            margin: 0 auto;
+            display: flex;
+            width: fit-content;
+        }
+
+        .view-all-btn:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .view-all-btn::after {
+            content: '→';
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .view-all-btn:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* ============================================
+           FOOTER STYLES
+        ============================================ */
+
+        footer {
+            background: #050505;
+            color: #fff;
+            padding: 80px 0 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-main {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 60px 60px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 80px;
+        }
+
+        /* Footer About */
+        .footer-about .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .footer-logo .logo-icon {
+            width: 55px;
+            height: 55px;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-about p {
+            font-size: 14px;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+        }
+
+        .footer-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 25px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .social-link:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Footer Sections */
+        .footer-section h3 {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 25px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 14px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+
+        /* Footer Contact */
+        .footer-contact-info {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-contact-info li {
+            margin-bottom: 18px;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.6;
+        }
+
+        .footer-contact-info .icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .footer-contact-info a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-contact-info a:hover {
+            color: #fff;
+        }
+
+        /* Footer Bottom */
+        .footer-bottom {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.5px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #fff;
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .service-title {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .header-container {
+                padding: 0 30px;
+            }
+
+            .nav-main {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .mobile-menu {
+                padding: 40px 30px;
+            }
+
+            .slide-content h1 {
+                font-size: 48px;
+            }
+
+            .slide-cta {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .slider-arrow {
+                display: none;
+            }
+
+            .service-content {
+                padding: 60px 30px;
+            }
+
+            .service-title {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 42px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-main {
+                padding: 0 30px 40px;
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                padding: 25px 30px;
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-bottom-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide-content h1 {
+                font-size: 36px;
+            }
+
+            .service-item {
+                height: 60vh;
+                min-height: 500px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header id="mainHeader">
+        <div class="header-container">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <div class="logo-icon">DGT</div>
+                <div class="logo-text">
+                    <span class="brand">
+                        <span class="dgt">DGT</span>-<span class="studio">studio</span>
+                    </span>
+                    <span class="tagline">Premium Tuning</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="nav-main">
+                <ul class="nav-links">
+                    <li><a href="#exhaust">Выхлоп</a></li>
+                    <li><a href="#brakes">Тормоза</a></li>
+                    <li><a href="#wheels">Диски</a></li>
+                    <li><a href="#suspension">Подвеска</a></li>
+                    <li><a href="#projects">Проекты</a></li>
+                </ul>
+                
+                <div class="header-contact">
+                    <a href="tel:+74951280227" class="header-phone">
+                        <span class="phone-icon">📞</span>
+                        <span>+7 (495) 128-02-27</span>
+                    </a>
+                    <button class="contact-btn" onclick="openContactForm()">
+                        Связаться
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Mobile Toggle -->
+            <div class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-nav">
+                <li><a href="#exhaust">Выхлопные системы</a></li>
+                <li><a href="#brakes">Тормозные системы</a></li>
+                <li><a href="#wheels">Кованые диски</a></li>
+                <li><a href="#suspension">Подвеска</a></li>
+                <li><a href="#projects">Проекты</a></li>
+            </ul>
+            <div class="mobile-contact">
+                <a href="tel:+74951280227" class="header-phone">
+                    <span class="phone-icon">📞</span>
+                    <span>+7 (495) 128-02-27</span>
+                </a>
+                <button class="contact-btn" style="width: 100%;" onclick="openContactForm()">
+                    Связаться с нами
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SLIDER -->
+    <section class="hero-slider">
+        <!-- Slide 1 -->
+        <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop" alt="Performance Car" class="slide-bg">
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <div class="slide-label">DGT-studio</div>
+                <h1>Раскройте <strong>потенциал</strong><br>вашего автомобиля</h1>
+                <p>Премиальный тюнинг и доработка автомобилей мировыми брендами</p>
+                <div class="slide-cta">
+                    <a href="#services" class="cta-btn">Наши услуги</a>
+                    <a href="#projects" class="cta-btn secondary">Портфолио</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&h=1080&fit=crop" alt="Luxury Car" class="slide-bg">
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <div class="slide-label">Эксклюзивность</div>
+                <h1><strong>Индивидуальный</strong><br>подход</h1>
+                <p>Комплексные проекты от концепции до реализации</p>
+                <div class="slide-cta">
+                    <a href="#projects" class="cta-btn">Проекты под ключ</a>
+                    <a href="#contact" class="cta-btn secondary">Консультация</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1920&h=1080&fit=crop" alt="Sports Car" class="slide-bg">
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <div class="slide-label">Премиум качество</div>
+                <h1>Только <strong>оригинальные</strong><br>бренды</h1>
+                <p>Akrapovic • Brembo • HRE • KW • iPE и другие мировые лидеры</p>
+                <div class="slide-cta">
+                    <a href="#brands" class="cta-btn">Наши бренды</a>
+                    <a href="#warranty" class="cta-btn secondary">Гарантия</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="slider-arrow prev" onclick="prevSlide()">‹</div>
+        <div class="slider-arrow next" onclick="nextSlide()">›</div>
+        <div class="slider-nav">
+            <div class="slider-dot active" onclick="goToSlide(0)"></div>
+            <div class="slider-dot" onclick="goToSlide(1)"></div>
+            <div class="slider-dot" onclick="goToSlide(2)"></div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services-section" id="services">
+        
+        <!-- Service 1: Exhaust Systems -->
+        <div class="service-item" id="exhaust">
+            <img src="https://img.freepik.com/premium-photo/closeup-view-car39s-triple-exhaust-pipes-reflecting-light_1368099-4350.jpg?w=2000" alt="Exhaust Systems" class="service-bg">
+            <div class="service-overlay"></div>
+            <div class="service-content">
+                <div class="service-label">Услуга 01</div>
+                <h2 class="service-title"><strong>Выхлопные</strong> системы</h2>
+                <p class="service-description">
+                    Премиальные титановые и стальные выхлопные системы от мировых производителей. 
+                    Улучшение звука, производительности и снижение веса вашего автомобиля на 8-15 кг.
+                </p>
+                <div class="service-brands">
+                    <span class="brand-badge">Akrapovic</span>
+                    <span class="brand-badge">iPE</span>
+                    <span class="brand-badge">Capristo</span>
+                    <span class="brand-badge">Remus</span>
+                </div>
+                <a href="exhaust-catalog.html" class="service-link">Выбрать систему</a>
+            </div>
+        </div>
+
+        <!-- Service 2: Brake Systems -->
+        <div class="service-item" id="brakes">
+            <img src="https://img.freepik.com/premium-photo/colorful-red-yellow-blue-green-sport-racing-brake-discs-isolated-gray-background-3d-rende_475765-57.jpg?w=1060" alt="Brake Systems" class="service-bg">
+            <div class="service-overlay"></div>
+            <div class="service-content">
+                <div class="service-label">Услуга 02</div>
+                <h2 class="service-title"><strong>Тормозные</strong> системы</h2>
+                <p class="service-description">
+                    Высокопроизводительные тормозные системы с многопоршневыми суппортами и карбон-керамическими дисками. 
+                    Максимальный контроль и безопасность на любой скорости.
+                </p>
+                <div class="service-brands">
+                    <span class="brand-badge">Brembo</span>
+                    <span class="brand-badge">AP Racing</span>
+                    <span class="brand-badge">Endless</span>
+                </div>
+                <a href="brakes-filter.html" class="service-link">Подобрать систему</a>
+            </div>
+        </div>
+
+        <!-- Service 3: Forged Wheels -->
+        <div class="service-item" id="wheels">
+            <img src="https://img.freepik.com/premium-photo/car-alloy-wheels-store-selective-focus-sale-replacement_326821-1799.jpg?w=2000" alt="Forged Wheels" class="service-bg">
+            <div class="service-overlay"></div>
+            <div class="service-content">
+                <div class="service-label">Услуга 03</div>
+                <h2 class="service-title"><strong>Кованые</strong> диски</h2>
+                <p class="service-description">
+                    Эксклюзивные кованые диски ручной работы. Индивидуальный дизайн, любые размеры и цвета. 
+                    Легкие, прочные и уникальные — созданы специально для вашего автомобиля.
+                </p>
+                <div class="service-brands">
+                    <span class="brand-badge">HRE</span>
+                    <span class="brand-badge">Vossen</span>
+                    <span class="brand-badge">BBS</span>
+                    <span class="brand-badge">ADV.1</span>
+                </div>
+                <a href="wheel-calculator.html" class="service-link">Рассчитать стоимость</a>
+            </div>
+        </div>
+
+        <!-- Service 4: Suspension -->
+        <div class="service-item" id="suspension">
+            <img src="https://img.freepik.com/free-photo/mechanical-female-changing-car-wheels_23-2148327504.jpg?t=st=1763580470~exp=1763584070~hmac=018a8e89baecb86fc0b5fd521071a31d96f76f05a23d71e36c4d4544118af34b&w=2000" alt="Suspension" class="service-bg">
+            <div class="service-overlay"></div>
+            <div class="service-content">
+                <div class="service-label">Услуга 04</div>
+                <h2 class="service-title"><strong>Подвеска</strong></h2>
+                <p class="service-description">
+                    Профессиональные системы подвески: койловеры, пневмоподвеска, стабилизаторы. 
+                    Улучшение управляемости, регулировка жесткости и клиренса под любые задачи.
+                </p>
+                <div class="service-brands">
+                    <span class="brand-badge">KW</span>
+                    <span class="brand-badge">Öhlins</span>
+                    <span class="brand-badge">Air Lift</span>
+                </div>
+                <a href="suspension.html" class="service-link">Смотреть каталог</a>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="projects-section" id="projects">
+        <div class="projects-container">
+            <div class="section-header">
+                <div class="section-label">Portfolio</div>
+                <h2 class="section-title"><strong>Проекты</strong> под ключ</h2>
+                <p class="section-description">
+                    Комплексные решения для популярных моделей. Готовые спек-листы модификаций: 
+                    от выхлопной системы до полной трансформации автомобиля.
+                </p>
+            </div>
+
+            <div class="projects-grid">
+                
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&h=600&fit=crop" alt="Porsche 911 GT3" class="project-image">
+                    <div class="project-overlay">
+                        <span class="project-badge">Porsche</span>
+                        <h3 class="project-name">911 GT3 (992)</h3>
+                        <p class="project-specs">+35 л.с. • -25 кг • 6 модификаций</p>
+                        <a href="project-gt3.html" class="project-action">Подробнее</a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <img src="https://img.freepik.com/free-photo/silver-sedan-with-red-lights-parked-port_114579-4385.jpg" alt="BMW M3" class="project-image">
+                    <div class="project-overlay">
+                        <span class="project-badge">BMW</span>
+                        <h3 class="project-name">M3 Competition</h3>
+                        <p class="project-specs">+50 л.с. • -18 кг • 7 модификаций</p>
+                        <a href="project-m3.html" class="project-action">Подробнее</a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop" alt="Mercedes-AMG GT" class="project-image">
+                    <div class="project-overlay">
+                        <span class="project-badge">Mercedes-AMG</span>
+                        <h3 class="project-name">GT 63 S 4MATIC+</h3>
+                        <p class="project-specs">+45 л.с. • -22 кг • 8 модификаций</p>
+                        <a href="project-amg.html" class="project-action">Подробнее</a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&h=600&fit=crop" alt="Audi RS6" class="project-image">
+                    <div class="project-overlay">
+                        <span class="project-badge">Audi</span>
+                        <h3 class="project-name">RS6 Avant (C8)</h3>
+                        <p class="project-specs">+70 л.с. • -20 кг • 9 модификаций</p>
+                        <a href="project-rs6.html" class="project-action">Подробнее</a>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <img src="https://img.freepik.com/free-photo/white-mini-coupe-road_114579-5082.jpg" alt="Porsche Cayenne" class="project-image">
+                    <div class="project-overlay">
+                        <span class="project-badge">Porsche</span>
+                        <h3 class="project-name">Cayenne Turbo GT</h3>
+                        <p class="project-specs">+40 л.с. • -15 кг • 6 модификаций</p>
+                        <a href="project-cayenne.html" class="project-action">Подробнее</a>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <img src="https://img.freepik.com/premium-photo/robotic-car-assembly_931086-3062.jpg" alt="BMW M5" class="project-image">
+                    <div class="project-overlay">
+                        <span class="project-badge">BMW</span>
+                        <h3 class="project-name">M5 Competition</h3>
+                        <p class="project-specs">+60 л.с. • -20 кг • 8 модификаций</p>
+                        <a href="project-m5.html" class="project-action">Подробнее</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <a href="projects.html" class="view-all-btn">Смотреть все проекты</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-main">
+            <!-- About Column -->
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <div class="logo-icon">DGT</div>
+                    <div class="logo-text">
+                        <span class="brand">
+                            <span class="dgt">DGT</span>-<span class="studio">studio</span>
+                        </span>
+                        <span class="tagline">Premium Tuning</span>
+                    </div>
+                </div>
+                <p>
+                    DGT-studio — ведущий центр по тюнингу и доработке премиум автомобилей в Москве. 
+                    Специализируемся на выхлопных системах, тормозах, кованых дисках и комплексных проектах. 
+                    Работаем только с оригинальной продукцией мировых брендов.
+                </p>
+                
+                <div class="footer-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">500+</div>
+                        <div class="stat-label">Проектов</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">10+</div>
+                        <div class="stat-label">Лет опыта</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">15+</div>
+                        <div class="stat-label">Брендов</div>
+                    </div>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://instagram.com/dgtstudio" target="_blank" class="social-link" aria-label="Instagram">📷</a>
+                    <a href="https://youtube.com/dgtstudio" target="_blank" class="social-link" aria-label="YouTube">▶</a>
+                    <a href="https://vk.com/dgtstudio" target="_blank" class="social-link" aria-label="VK">В</a>
+                    <a href="https://t.me/dgtstudio" target="_blank" class="social-link" aria-label="Telegram">✈</a>
+                </div>
+            </div>
+
+            <!-- Services Column -->
+            <div class="footer-section">
+                <h3>Услуги</h3>
+                <ul class="footer-links">
+                    <li><a href="exhaust-catalog.html">Выхлопные системы</a></li>
+                    <li><a href="brakes-filter.html">Тормозные системы</a></li>
+                    <li><a href="wheel-calculator.html">Кованые диски</a></li>
+                    <li><a href="suspension.html">Подвеска</a></li>
+                    <li><a href="projects.html">Комплексные проекты</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Column -->
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <ul class="footer-contact-info">
+                    <li>
+                        <span class="icon">📍</span>
+                        <span>Москва, Киевская ул., 14, стр. 1</span>
+                    </li>
+                    <li>
+                        <span class="icon">📞</span>
+                        <a href="tel:+74951280227">+7 (495) 128-02-27</a>
+                    </li>
+                    <li>
+                        <span class="icon">✉</span>
+                        <a href="mailto:info@dgt-studio.ru">info@dgt-studio.ru</a>
+                    </li>
+                    <li>
+                        <span class="icon">🕐</span>
+                        <span>Пн-Вс: 9:00 - 21:00<br>Без выходных</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                © 2025 DGT-studio. Все права защищены.
+            </div>
+            <div class="footer-bottom-links">
+                <a href="privacy.html">Политика конфиденциальности</a>
+                <a href="terms.html">Условия использования</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // ===== HEADER =====
+        const header = document.getElementById('mainHeader');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!header.contains(e.target) && mobileMenu.classList.contains('active')) {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ===== HERO SLIDER =====
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            showSlide(currentSlide);
+        }
+
+        // Auto slide every 6 seconds
+        setInterval(nextSlide, 6000);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+    });
+                }
+            });
+        });
+
+        // ===== CONTACT FORM =====
+        function openContactForm() {
+            alert('Форма обратной связи\n\nВ финальной версии здесь будет модальное окно с полями:\n• Имя\n• Телефон\n• Email\n• Выбор услуги\n• Сообщение\n• Согласие на обработку данных');
+        }
+    </script>
+
+</body>
+</html>
